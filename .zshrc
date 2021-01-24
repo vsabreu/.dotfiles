@@ -1,5 +1,16 @@
+# __        __
+# \ \      /  \        Vinicius Abreu
+#  \ \    / /\ \             
+#   \ \  / /  \ \      . https://vinic.io/         
+#    \ \/ /    \ \     . https://github.com/vsabreu
+#     \__/      \_\
+#
+# My zshrc config file. Nothing special to see here.
+# __________________________________________________
+
+
 ### EXPORT
-export TERM="xterm-256color"              # getting proper colors
+export TERM="xterm-256color"
 export HISTORY_IGNORE="(ls|cd|pwd|exit|sudo reboot|history|cd -|cd ..)"
 
 
@@ -13,10 +24,6 @@ fi
 
 if [ -d "$HOME/.local/bin" ] ;
   then PATH="$HOME/.local/bin:$PATH"
-fi
-
-if [ -d "$HOME/Applications" ] ;
-  then PATH="$HOME/Applications:$PATH"
 fi
 
 ### CHANGE TITLE OF TERMINALS
