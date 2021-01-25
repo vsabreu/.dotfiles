@@ -66,6 +66,7 @@ ex ()
 ### OH MY ZSH ###
 
 # Path to your oh-my-zsh installation.
+ZSH_THEME="agnoster"
 ZSH=$HOME/.oh-my-zsh
 
 # Would you like to use another custom folder than $ZSH/custom?
