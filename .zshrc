@@ -113,4 +113,6 @@ alias cp="cp -i"
 alias mv='mv -i'
 alias rm='rm -i'
 
+export XENVIRONMENT="${HOME}/.Xresources"
+
 alias dotfiles='/usr/bin/git --git-dir=/home/vsa/.dotfiles/ --work-tree=/home/vsa'
