@@ -3,9 +3,18 @@
 import XMonad
 import Data.Monoid
 import System.Exit
-import XMonad.Hooks.ManageDocks
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
+
+-- Hooks
+import XMonad.Hooks.DynamicLog (dynamicLogWithPP, wrap, xmobarPP, xmobarColor, shorten, PP(..))
+import XMonad.Hooks.EwmhDesktops  -- for some fullscreen events, also for xcomposite in obs.
+import XMonad.Hooks.FadeInactive
+import XMonad.Hooks.ManageDocks (avoidStruts, docks, docksEventHook, manageDocks, ToggleStruts(..))
+import XMonad.Hooks.ManageHelpers (isFullscreen, doFullFloat)
+import XMonad.Hooks.ServerMode
+import XMonad.Hooks.SetWMName
+import XMonad.Hooks.WorkspaceHistory
 
 -- Actions
 import XMonad.Actions.CopyWindow (kill1, killAllOtherCopies)
@@ -17,6 +26,7 @@ import XMonad.Actions.RotSlaves (rotSlavesDown, rotAllDown)
 import qualified XMonad.Actions.TreeSelect as TS
 import XMonad.Actions.WindowGo (runOrRaise)
 import XMonad.Actions.WithAll (sinkAll, killAll)
+import XMonad.Actions.WorkspaceNames
 import qualified XMonad.Actions.Search as S
 
 -- Layouts
@@ -84,7 +94,7 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
+myWorkspaces    = [ " sys "," dev "," web ", " doc ", " vbox ", " chat ", " mus ", " vid ", "" ]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -355,6 +365,12 @@ myEventHook = mempty
 --
 myLogHook = return ()
 
+
+-- windowCount counts all opened windows on WS
+--
+windowCount :: X (Maybe String)
+windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
+
 ------------------------------------------------------------------------
 -- Startup hook
 
@@ -374,17 +390,8 @@ myStartupHook = do
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main = do
-    xmproc <- spawnPipe "xmobar -x 0 /home/vsa/.xmobarrc"
-    xmonad $ docks defaults
-
--- A structure containing your configuration settings, overriding
--- fields in the default config. Any you don't override, will
--- use the defaults defined in xmonad/XMonad/Config.hs
---
--- No need to modify this.
---
-defaults = def {
-      -- simple stuff
+    xmproc0 <- spawnPipe "xmobar -x 0 /home/vsa/.xmobarrc"
+    xmonad $ docks def {
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
         clickJustFocuses   = myClickJustFocuses,
@@ -400,9 +407,20 @@ defaults = def {
 
       -- hooks, layouts
         layoutHook         = myLayout,
-        manageHook         = myManageHook,
+        manageHook         = ( isFullscreen --> doFullFloat ) <+> myManageHook,
         handleEventHook    = myEventHook,
-        logHook            = myLogHook,
+        logHook            = workspaceHistoryHook <+> myLogHook <+> dynamicLogWithPP xmobarPP
+                        { ppOutput = \x -> hPutStrLn xmproc0 x
+                        , ppCurrent = xmobarColor "#98be65" "" . wrap "[" "]" -- Current workspace in xmobar
+                        , ppVisible = xmobarColor "#98be65" ""                -- Visible but not current workspace
+                        , ppHidden = xmobarColor "#82AAFF" "" . wrap "*" ""   -- Hidden workspaces in xmobar
+                        , ppHiddenNoWindows = xmobarColor "#c792ea" ""        -- Hidden workspaces (no windows)
+                        , ppTitle = xmobarColor "#b3afc2" "" . shorten 60     -- Title of active window in xmobar
+                        , ppSep =  "<fc=#666666> <fn=1>|</fn> </fc>"          -- Separators in xmobar
+                        , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!"  -- Urgent workspace
+                        , ppExtras  = [windowCount]                           -- # of windows current workspace
+                        , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
+                        },
         startupHook        = myStartupHook
     }
 
