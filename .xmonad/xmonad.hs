@@ -413,7 +413,7 @@ main = do
                         { ppOutput = \x -> hPutStrLn xmproc0 x
                         , ppCurrent = xmobarColor "#98be65" "" . wrap "[" "]" -- Current workspace in xmobar
                         , ppVisible = xmobarColor "#98be65" ""                -- Visible but not current workspace
-                        , ppHidden = xmobarColor "#82AAFF" "" . wrap "*" ""   -- Hidden workspaces in xmobar
+                        , ppHidden = xmobarColor "#82AAFF" ""                 -- Hidden workspaces in xmobar
                         , ppHiddenNoWindows = xmobarColor "#c792ea" ""        -- Hidden workspaces (no windows)
                         , ppTitle = xmobarColor "#b3afc2" "" . shorten 60     -- Title of active window in xmobar
                         , ppSep =  "<fc=#666666> <fn=1>|</fn> </fc>"          -- Separators in xmobar
