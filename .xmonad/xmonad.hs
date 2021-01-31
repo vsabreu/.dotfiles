@@ -76,7 +76,7 @@ myClickJustFocuses = False
 
 -- Width of the window border in pixels.
 --
-myBorderWidth   = 2 
+myBorderWidth   = 1 
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -94,7 +94,7 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = [ " sys "," dev "," web ", " doc ", " vbox ", " chat ", " mus ", " vid ", "" ]
+myWorkspaces    = [ " $ "," dev "," web ", " doc ", " vbox ", " chat ", " mus ", " vid ", " todo " ]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -381,9 +381,7 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 -- By default, do nothing.
 myStartupHook = do
     spawnOnce "nitrogen --restore &"
---    spawnOnce "volumeicon &"
---    spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --tint 0x282c34  --height 22 &"
-
+    setWMName "LG3D"
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 
@@ -415,7 +413,7 @@ main = do
                         , ppVisible = xmobarColor "#98be65" ""                -- Visible but not current workspace
                         , ppHidden = xmobarColor "#82AAFF" ""                 -- Hidden workspaces in xmobar
                         , ppHiddenNoWindows = xmobarColor "#c792ea" ""        -- Hidden workspaces (no windows)
-                        , ppTitle = xmobarColor "#b3afc2" "" . shorten 60     -- Title of active window in xmobar
+                        , ppTitle = xmobarColor "#b3afc2" "" . shorten 200    -- Title of active window in xmobar
                         , ppSep =  "<fc=#666666> <fn=1>|</fn> </fc>"          -- Separators in xmobar
                         , ppUrgent = xmobarColor "#C45500" "" . wrap "!" "!"  -- Urgent workspace
                         , ppExtras  = [windowCount]                           -- # of windows current workspace
