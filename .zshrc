@@ -117,3 +117,7 @@ alias rm='rm -i'
 export XENVIRONMENT="${HOME}/.Xresources"
 
 alias dotfiles='/usr/bin/git --git-dir=/home/vsa/.dotfiles/ --work-tree=/home/vsa'
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!! 
+export SDKMAN_DIR="/home/vsa/.sdkman"                            
+[[ -s "/home/vsa/.sdkman/bin/sdkman-init.sh" ]] && source "/home/vsa/.sdkman/bin/sdkman-init.sh"
