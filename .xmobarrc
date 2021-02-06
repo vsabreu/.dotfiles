@@ -14,7 +14,7 @@ Config { font    = "xft:Ubuntu:pixelsize=12:antialias=true:hinting=true"
        , hideOnStart = False
        , allDesktops = True
        , persistent = True
-       , iconRoot = "/home/vsa/.xmonad/xpm/"  -- default: "."
+       , iconRoot = "/home/viniciusabreu/.xmonad/xpm/"  -- default: "."
        , commands = [
                       -- Time and date
                       Run Date "<fn=1>\xf133  </fn>%b %d %Y - (%H:%M) " "date" 50
