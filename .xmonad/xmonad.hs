@@ -390,7 +390,8 @@ myStartupHook = do
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main = do
-    xmproc0 <- spawnPipe "xmobar -x 0 /home/vsa/.xmobarrc"
+    xmproc0 <- spawnPipe "xmobar -x 0 /home/viniciusabreu/.xmobarrc"
+    xmproc1 <- spawnPipe "xmobar -x 1 /home/viniciusabreu/.xmobarrc"
     xmonad $ docks def {
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,

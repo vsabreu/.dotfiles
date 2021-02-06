@@ -63,6 +63,19 @@ ex ()
   fi
 }
 
+
+# set dual monitors
+dual () {
+    xrandr --output HDMI-1 --primary --left-of eDP-1 --output HDMI-1 --auto
+}
+
+# set single monitor
+single () {
+    xrandr --output eDP-1 --off
+}
+
+dual
+
 ### OH MY ZSH ###
 
 # Path to your oh-my-zsh installation.
@@ -117,3 +130,18 @@ alias rm='rm -i'
 export XENVIRONMENT="${HOME}/.Xresources"
 
 alias dotfiles='/usr/bin/git --git-dir=/home/viniciusabreu/.dotfiles/ --work-tree=/home/viniciusabreu'
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/viniciusabreu/.sdkman"
+[[ -s "/home/viniciusabreu/.sdkman/bin/sdkman-init.sh" ]] && source "/home/viniciusabreu/.sdkman/bin/sdkman-init.sh"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+export AWS_VAULT_BACKEND=file
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
