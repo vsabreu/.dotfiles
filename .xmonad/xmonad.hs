@@ -64,7 +64,7 @@ myTerminal      = "xterm"
 
 -- The preferred overall font
 myFont :: String
-myFont = "xft:Ubuntu:regular:size=10:antialias=true:hinting=true"
+myFont = "xft:Ubuntu:regular:size=12:antialias=true:hinting=true"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -76,7 +76,7 @@ myClickJustFocuses = False
 
 -- Width of the window border in pixels.
 --
-myBorderWidth   = 2 
+myBorderWidth   = 1
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -94,12 +94,12 @@ myModMask       = mod4Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = [ " sys "," dev "," web ", " doc ", " vbox ", " chat ", " mus ", " vid ", "" ]
+myWorkspaces    = [ " $ "," dev "," web ", " doc ", " vbox ", " slack ", " mus ", " vid ", " todo " ]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
-myNormalBorderColor  = "#d5d3d0"
-myFocusedBorderColor = "#8000BA"
+myNormalBorderColor  = "#000000"
+myFocusedBorderColor = "#87AFFF"
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
@@ -381,6 +381,7 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 -- By default, do nothing.
 myStartupHook = do
     spawnOnce "nitrogen --restore &"
+    setWMName "LG3D"
 --    spawnOnce "volumeicon &"
 --    spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --tint 0x282c34  --height 22 &"
 
@@ -411,7 +412,7 @@ main = do
         manageHook         = ( isFullscreen --> doFullFloat ) <+> myManageHook,
         handleEventHook    = myEventHook,
         logHook            = workspaceHistoryHook <+> myLogHook <+> dynamicLogWithPP xmobarPP
-                        { ppOutput = \x -> hPutStrLn xmproc0 x
+                        { ppOutput = \x -> hPutStrLn xmproc1 x >> hPutStrLn xmproc0 x
                         , ppCurrent = xmobarColor "#98be65" "" . wrap "[" "]" -- Current workspace in xmobar
                         , ppVisible = xmobarColor "#98be65" ""                -- Visible but not current workspace
                         , ppHidden = xmobarColor "#82AAFF" ""                 -- Hidden workspaces in xmobar
